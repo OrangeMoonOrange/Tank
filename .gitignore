@@ -1,4 +1,5 @@
 .idea
 Tank.iml
 src/test/
-.gitignore
+.gitignore/
+target/
