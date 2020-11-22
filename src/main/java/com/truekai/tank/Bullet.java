@@ -16,12 +16,14 @@ public class Bullet {
     private TankFrame tf;
     public static int WIDTH = RessourceMange.bulletD.getWidth();//宽度
     public static int HEIGHT = RessourceMange.bulletD.getHeight();//高度
+    private Group group=Group.BAD;
 
-    public Bullet(int x, int y, Dir dir, TankFrame tf) {
+    public Bullet(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.dir = dir;
         this.x = x;
         this.y = y;
         this.tf = tf;
+        this.group = group;
     }
 
     public void paint(Graphics g) {
@@ -67,6 +69,8 @@ public class Bullet {
     }
 
     public void collidewith(Tank tank1) {
+        if (this.group == tank1.getGroup()) return;
+
         Rectangle bullet = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
         Rectangle tank = new Rectangle(tank1.getX(), tank1.getY(), tank1.getWIDTH(), tank1.getHEIGHT());
 

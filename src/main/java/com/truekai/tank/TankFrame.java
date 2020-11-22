@@ -14,7 +14,8 @@ import java.util.List;
  * @Desc:
  */
 public class TankFrame extends Frame {
-    Tank myTank = new Tank(400, 300, Dir.DOWN, this);
+    Tank myTank = new Tank(400, 300, Dir.DOWN, Group.GOOD, this);
+
     //敌人坦克
 
     List<Tank> tanks = new ArrayList<>();
@@ -23,6 +24,7 @@ public class TankFrame extends Frame {
 
 
     public TankFrame() {
+        myTank.setMoving(false);
         setSize(GAME_WIDTH, GAME_HEIGHT);
         setResizable(false);
         setTitle("Tank");
@@ -61,6 +63,7 @@ public class TankFrame extends Frame {
         g.drawString("敌人的数量：" + tanks.size(), 10, 80);
         g.setColor(c);
         myTank.paint(g);
+
 
         //画出地方坦克
         for (int i = 0; i < tanks.size(); i++) {

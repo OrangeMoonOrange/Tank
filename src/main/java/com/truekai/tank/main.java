@@ -10,7 +10,7 @@ public class main {
         TankFrame tr = new TankFrame();
         //初始化地方坦克
         for (int i = 0; i < 5; i++) {
-            tr.tanks.add(new Tank(200+i*80, 100, Dir.DOWN, tr));
+            tr.tanks.add(new Tank(200+i*80, 100, Dir.DOWN,Group.BAD, tr));
         }
 
         while (true) {
