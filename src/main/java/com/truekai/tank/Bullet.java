@@ -8,7 +8,7 @@ import java.awt.*;
  * @Desc: 子弹类
  */
 public class Bullet {
-    private static final int SPEED = 1;//速度
+    private static final int SPEED = 5;//速度
     private Dir dir;//方向
     private int x;//x位置
     private int y;//y位置
@@ -24,11 +24,11 @@ public class Bullet {
 
     public void paint(Graphics g) {
         if (!live) {
-            this.tf.bulletList.remove(this);
+            this.tf.MybulletList.remove(this);
         }
         Color c = g.getColor();
         g.setColor(Color.RED);
-        g.fillOval(x, y, 50, 50);
+        g.fillOval(x, y, 20, 20);
         g.setColor(c);
         move();
     }
