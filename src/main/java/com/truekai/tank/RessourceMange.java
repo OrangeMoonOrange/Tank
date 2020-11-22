@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
 public class RessourceMange {
 
     public static BufferedImage tankL, tankR, tankU, tankD = null;
-
+    public static BufferedImage bulletL, bulletR, bulletU, bulletD = null;
     static {
         try {
             tankL = ImageIO.read(ImageTest.class.getClassLoader().
@@ -24,6 +24,15 @@ public class RessourceMange {
                     getResourceAsStream("images/tankU.gif"));
             tankD = ImageIO.read(ImageTest.class.getClassLoader().
                     getResourceAsStream("images/tankD.gif"));
+
+            bulletL = ImageIO.read(ImageTest.class.getClassLoader().
+                    getResourceAsStream("images/bulletL.gif"));
+            bulletR = ImageIO.read(ImageTest.class.getClassLoader().
+                    getResourceAsStream("images/bulletR.gif"));
+            bulletU = ImageIO.read(ImageTest.class.getClassLoader().
+                    getResourceAsStream("images/bulletU.gif"));
+            bulletD = ImageIO.read(ImageTest.class.getClassLoader().
+                    getResourceAsStream("images/bulletD.gif"));
         } catch (Exception e) {
             e.printStackTrace();
         }
