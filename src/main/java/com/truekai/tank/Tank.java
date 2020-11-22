@@ -66,7 +66,7 @@ public class Tank {
     public void fire() {
         Bullet bullet = new Bullet(this.x, this.y, this.dir);
 
-        tf.b = bullet;
+        tf.bulletList.add(bullet);
 
     }
 }
