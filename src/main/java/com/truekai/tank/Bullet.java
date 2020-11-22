@@ -14,6 +14,8 @@ public class Bullet {
     private int y;//y位置
     private boolean live = true;//是否还活着  边界判断
     private TankFrame tf;
+    public static int WIDTH = RessourceMange.bulletD.getWidth();//宽度
+    public static int HEIGHT = RessourceMange.bulletD.getHeight();//高度
 
     public Bullet(int x, int y, Dir dir, TankFrame tf) {
         this.dir = dir;
@@ -41,8 +43,6 @@ public class Bullet {
                 break;
         }
 
-
-
         move();
     }
 
@@ -64,5 +64,19 @@ public class Bullet {
         if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT) {
             live = false;
         }
+    }
+
+    public void collidewith(Tank tank1) {
+        Rectangle bullet = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
+        Rectangle tank = new Rectangle(tank1.getX(), tank1.getY(), tank1.getWIDTH(), tank1.getHEIGHT());
+
+        if (bullet.intersects(tank)) {
+            this.die();
+            tank1.die();
+        }
+    }
+
+    private void die() {
+        this.live = false;
     }
 }
