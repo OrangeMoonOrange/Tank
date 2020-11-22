@@ -20,11 +20,14 @@ public class TankFrame extends Frame {
 
     List<Tank> tanks = new ArrayList<>();
     List<Bullet> MybulletList = new ArrayList<>();
+    Explode e = new Explode(100, 100, this);
     static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
 
 
     public TankFrame() {
         myTank.setMoving(false);
+        myTank.setIsfire(false);
+        myTank.setSPEED(10);
         setSize(GAME_WIDTH, GAME_HEIGHT);
         setResizable(false);
         setTitle("Tank");
@@ -81,6 +84,7 @@ public class TankFrame extends Frame {
                 MybulletList.get(i).collidewith(tanks.get(j));
             }
         }
+        e.paint(g);//爆炸
 
     }
 

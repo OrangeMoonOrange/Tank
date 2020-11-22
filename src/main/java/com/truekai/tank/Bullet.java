@@ -8,7 +8,7 @@ import java.awt.*;
  * @Desc: 子弹类
  */
 public class Bullet {
-    private static final int SPEED = 5;//速度
+    private  int SPEED = 5;//速度
     private Dir dir;//方向
     private int x;//x位置
     private int y;//y位置
@@ -82,5 +82,13 @@ public class Bullet {
 
     private void die() {
         this.live = false;
+    }
+
+    public int getSPEED() {
+        return SPEED;
+    }
+
+    public void setSPEED(int SPEED) {
+        this.SPEED = SPEED;
     }
 }

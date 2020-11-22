@@ -11,14 +11,15 @@ import java.util.Random;
 public class Tank {
     private int x, y;
     private Dir dir = Dir.DOWN;
-    private static final int SPEED = 1;
+    private  int SPEED = 1;
     private boolean moving = true;
     private boolean living = true;//是否还或者或者
+    private boolean isfire = true;
     private TankFrame tf = null;
-    public  static int WIDTH = RessourceMange.tankU.getWidth();//宽度
-    public  static int HEIGHT = RessourceMange.tankU.getHeight();//高度
+    public static int WIDTH = RessourceMange.tankU.getWidth();//宽度
+    public static int HEIGHT = RessourceMange.tankU.getHeight();//高度
 
-    private Group group=Group.BAD;
+    private Group group = Group.BAD;
 
     private Random random = new Random();
 
@@ -28,6 +29,14 @@ public class Tank {
         this.dir = dir;
         this.tf = tf;
         this.group = group;
+    }
+
+    public int getSPEED() {
+        return SPEED;
+    }
+
+    public void setSPEED(int SPEED) {
+        this.SPEED = SPEED;
     }
 
     public Group getGroup() {
@@ -52,6 +61,14 @@ public class Tank {
 
     public void setHEIGHT(int HEIGHT) {
         this.HEIGHT = HEIGHT;
+    }
+
+    public boolean isIsfire() {
+        return isfire;
+    }
+
+    public void setIsfire(boolean isfire) {
+        this.isfire = isfire;
     }
 
     public int getX() {
@@ -124,15 +141,14 @@ public class Tank {
                 break;
         }
 
-        if (random.nextInt(10) > 8)
+        if (isfire && random.nextInt(10) > 8)
             this.fire();
     }
 
     public void fire() {
-
-        int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2;
-        int bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT/2;
-        Bullet bullet = new Bullet(bX, bY, this.dir, this.group,this.tf);
+        int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
+        int bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
+        Bullet bullet = new Bullet(bX, bY, this.dir, this.group, this.tf);
         tf.MybulletList.add(bullet);
     }
 
