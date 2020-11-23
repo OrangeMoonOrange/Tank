@@ -11,10 +11,10 @@ import java.util.Random;
 public class Tank {
     private int x, y;
     private Dir dir = Dir.DOWN;
-    private  int SPEED = 1;
+    private int SPEED = 1;
     private boolean moving = true;
     private boolean living = true;//是否还或者或者
-    private boolean isfire = true;
+
     private TankFrame tf = null;
     public static int WIDTH = RessourceMange.tankU.getWidth();//宽度
     public static int HEIGHT = RessourceMange.tankU.getHeight();//高度
@@ -63,13 +63,6 @@ public class Tank {
         this.HEIGHT = HEIGHT;
     }
 
-    public boolean isIsfire() {
-        return isfire;
-    }
-
-    public void setIsfire(boolean isfire) {
-        this.isfire = isfire;
-    }
 
     public int getX() {
         return x;
@@ -141,8 +134,15 @@ public class Tank {
                 break;
         }
 
-        if (isfire && random.nextInt(10) > 8)
+        if (this.group == Group.BAD && random.nextInt(10) > 8)
             this.fire();
+        if (this.group == Group.BAD && random.nextInt(100) > 95)
+            randomDir();
+    }
+
+    private void randomDir() {
+        if(this.group==Group.GOOD) return;
+        this.dir = Dir.values()[random.nextInt(4)];
     }
 
     public void fire() {

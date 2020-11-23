@@ -20,15 +20,13 @@ public class TankFrame extends Frame {
 
     List<Tank> tanks = new ArrayList<>();
     List<Bullet> MybulletList = new ArrayList<>();
-   
-
     List<Explode> explodes = new ArrayList<>();//爆炸
     static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
 
 
     public TankFrame() {
         myTank.setMoving(false);
-        myTank.setIsfire(false);
+
         myTank.setSPEED(10);
         setSize(GAME_WIDTH, GAME_HEIGHT);
         setResizable(false);
