@@ -22,5 +22,29 @@
         <encoding>UTF-8</encoding>
     </properties>
 
+    <profiles>
+
+<!--        不同的配置文件的目录-->
+        <profile>
+            <id>test</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>test</name>
+                    <value>Test</value>
+                </property>
+            </activation>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources/test</directory>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+
+
+    </profiles>
+
 
 </project>

@@ -72,7 +72,6 @@ public class Bullet {
                 x += SPEED;
                 break;
         }
-
         //移动了就必须更新自己的rectangle的位置
         rectangle.x = this.x;
         rectangle.y = this.y;
