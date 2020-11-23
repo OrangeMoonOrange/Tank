@@ -22,6 +22,8 @@ public class Tank {
     private Group group = Group.BAD;
 
     private Random random = new Random();
+    //坦克自己的长方形，用于碰撞检测
+    Rectangle rectangle = new Rectangle();
 
     public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.x = x;
@@ -29,6 +31,12 @@ public class Tank {
         this.dir = dir;
         this.tf = tf;
         this.group = group;
+
+        //构造子弹自身的rectangle
+        rectangle.x = this.x;
+        rectangle.y = this.y;
+        rectangle.width = WIDTH;
+        rectangle.height = HEIGHT;
     }
 
     public int getSPEED() {
@@ -134,24 +142,39 @@ public class Tank {
                 break;
         }
 
-        if (this.group == Group.BAD && random.nextInt(10) > 8)
+
+        if (this.group == Group.BAD && random.nextInt(10) > 8) {
             this.fire();
-        if (this.group == Group.BAD && random.nextInt(100) > 95)
+        }
+        if (this.group == Group.BAD && random.nextInt(100) > 95) {
             randomDir();
+        }
 
         boundcheck();
+
+        //移动了就必须更新自己的rectangle的位置
+        rectangle.x = this.x;
+        rectangle.y = this.y;
     }
 
     //边界检测
     private void boundcheck() {
-        if(this.x<2) x=2;
-        if(this.y<28) y=28;
-        if(this.x>TankFrame.GAME_WIDTH-Tank.WIDTH) x=TankFrame.GAME_WIDTH-Tank.WIDTH;
-        if(this.y>TankFrame.GAME_HEIGHT-Tank.HEIGHT) y=TankFrame.GAME_HEIGHT-Tank.HEIGHT;
+        if (this.x < 2) {
+            x = 2;
+        }
+        if (this.y < 28) {
+            y = 28;
+        }
+        if (this.x > TankFrame.GAME_WIDTH - Tank.WIDTH) {
+            x = TankFrame.GAME_WIDTH - Tank.WIDTH;
+        }
+        if (this.y > TankFrame.GAME_HEIGHT - Tank.HEIGHT) {
+            y = TankFrame.GAME_HEIGHT - Tank.HEIGHT;
+        }
     }
 
     private void randomDir() {
-        if(this.group==Group.GOOD) return;
+        if (this.group == Group.GOOD) return;
         this.dir = Dir.values()[random.nextInt(4)];
     }
 

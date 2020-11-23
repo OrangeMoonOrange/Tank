@@ -18,12 +18,21 @@ public class Bullet {
     public static int HEIGHT = RessourceMange.bulletD.getHeight();//高度
     private Group group = Group.BAD;
 
+    //子弹自己的长方形，用于碰撞检测
+    Rectangle rectangle = new Rectangle();
+
     public Bullet(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.dir = dir;
         this.x = x;
         this.y = y;
         this.tf = tf;
         this.group = group;
+
+        //构造子弹自身的rectangle
+        rectangle.x = this.x;
+        rectangle.y = this.y;
+        rectangle.width = WIDTH;
+        rectangle.height = HEIGHT;
     }
 
     public void paint(Graphics g) {
@@ -63,6 +72,10 @@ public class Bullet {
                 x += SPEED;
                 break;
         }
+
+        //移动了就必须更新自己的rectangle的位置
+        rectangle.x = this.x;
+        rectangle.y = this.y;
         if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT) {
             live = false;
         }
@@ -71,10 +84,9 @@ public class Bullet {
     public void collidewith(Tank tank1) {
         if (this.group == tank1.getGroup()) return;
 
-        Rectangle bullet = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
-        Rectangle tank = new Rectangle(tank1.getX(), tank1.getY(), tank1.getWIDTH(), tank1.getHEIGHT());
 
-        if (bullet.intersects(tank)) {
+        //需要修改 会一直占用内存 已经修改
+        if (this.rectangle.intersects(tank1.rectangle)) {
             this.die();
             tank1.die();
             int ex = tank1.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
