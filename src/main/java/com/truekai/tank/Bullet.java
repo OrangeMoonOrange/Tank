@@ -8,7 +8,7 @@ import java.awt.*;
  * @Desc: 子弹类
  */
 public class Bullet {
-    private  int SPEED = 5;//速度
+    private int SPEED = 5;//速度
     private Dir dir;//方向
     private int x;//x位置
     private int y;//y位置
@@ -16,7 +16,7 @@ public class Bullet {
     private TankFrame tf;
     public static int WIDTH = RessourceMange.bulletD.getWidth();//宽度
     public static int HEIGHT = RessourceMange.bulletD.getHeight();//高度
-    private Group group=Group.BAD;
+    private Group group = Group.BAD;
 
     public Bullet(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.dir = dir;
@@ -77,6 +77,7 @@ public class Bullet {
         if (bullet.intersects(tank)) {
             this.die();
             tank1.die();
+            tf.explodes.add(new Explode(this.x, this.y, tf));
         }
     }
 

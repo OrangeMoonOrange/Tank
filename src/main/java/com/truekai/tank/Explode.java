@@ -25,12 +25,13 @@ public class Explode {
     }
 
 
-
     public void paint(Graphics g) {
 
         g.drawImage(RessourceMange.explodes[step++], x, y, null);
 
-        if(step >= RessourceMange.explodes.length)
+        if (step >= RessourceMange.explodes.length) {
             step = 0;
+            tf.explodes.remove(this);
+        }
     }
 }
