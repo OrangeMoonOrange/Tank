@@ -138,6 +138,16 @@ public class Tank {
             this.fire();
         if (this.group == Group.BAD && random.nextInt(100) > 95)
             randomDir();
+
+        boundcheck();
+    }
+
+    //边界检测
+    private void boundcheck() {
+        if(this.x<2) x=2;
+        if(this.y<28) y=28;
+        if(this.x>TankFrame.GAME_WIDTH-Tank.WIDTH) x=TankFrame.GAME_WIDTH-Tank.WIDTH;
+        if(this.y>TankFrame.GAME_HEIGHT-Tank.HEIGHT) y=TankFrame.GAME_HEIGHT-Tank.HEIGHT;
     }
 
     private void randomDir() {
