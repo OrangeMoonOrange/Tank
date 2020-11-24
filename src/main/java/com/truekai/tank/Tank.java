@@ -1,5 +1,9 @@
 package com.truekai.tank;
 
+import com.truekai.tank.fireStrategy.DefaultFireStrategy;
+import com.truekai.tank.fireStrategy.FireStrategy;
+import com.truekai.tank.fireStrategy.FourDirFireStrategy;
+
 import java.awt.*;
 import java.util.Random;
 
@@ -9,21 +13,23 @@ import java.util.Random;
  * @Desc: 定义坦克类
  */
 public class Tank {
-    private int x, y;
-    private Dir dir = Dir.DOWN;
+    public int x, y;
+    public Dir dir = Dir.DOWN;
     private int SPEED = 1;
     private boolean moving = true;
     private boolean living = true;//是否还或者或者
 
-    private TankFrame tf = null;
+    public TankFrame tf = null;
     public static int WIDTH = RessourceMange.tankU.getWidth();//宽度
     public static int HEIGHT = RessourceMange.tankU.getHeight();//高度
 
-    private Group group = Group.BAD;
+    public Group group = Group.BAD;
 
     private Random random = new Random();
     //坦克自己的长方形，用于碰撞检测
     Rectangle rectangle = new Rectangle();
+
+    public FireStrategy fs;
 
     public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.x = x;
@@ -37,6 +43,12 @@ public class Tank {
         rectangle.y = this.y;
         rectangle.width = WIDTH;
         rectangle.height = HEIGHT;
+
+        if (group == Group.GOOD) {
+            fs = new FourDirFireStrategy();
+        } else {
+            fs = new DefaultFireStrategy();
+        }
     }
 
     public int getSPEED() {
@@ -181,8 +193,8 @@ public class Tank {
     public void fire() {
         int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
         int bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
-        Bullet bullet = new Bullet(bX, bY, this.dir, this.group, this.tf);
-        tf.MybulletList.add(bullet);
+        tf.MybulletList.add(new Bullet(bX, bY, this.dir, this.group, this.tf));
+        fs.fire(this);
     }
 
     public void die() {

@@ -1,6 +1,7 @@
 package com.truekai.tank;
 
 import java.awt.*;
+import java.util.Comparator;
 
 /**
  * @Author: xk
@@ -33,6 +34,8 @@ public class Bullet {
         rectangle.y = this.y;
         rectangle.width = WIDTH;
         rectangle.height = HEIGHT;
+
+        tf.MybulletList.add(this);//每次新new出的子弹都添加进去
     }
 
     public void paint(Graphics g) {
