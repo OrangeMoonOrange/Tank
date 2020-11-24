@@ -3,8 +3,10 @@ package com.truekai.tank;
 import com.truekai.tank.fireStrategy.DefaultFireStrategy;
 import com.truekai.tank.fireStrategy.FireStrategy;
 import com.truekai.tank.fireStrategy.FourDirFireStrategy;
+import com.truekai.tank.prop.PropertyMgr;
 
 import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 /**
@@ -45,15 +47,18 @@ public class Tank {
         rectangle.height = HEIGHT;
 
         if (group == Group.GOOD) {
-            fs = new FourDirFireStrategy();
+            String goodFSName = (String)PropertyMgr.get("MyTankFireStrategy");
+            try {
+                fs = (FireStrategy)Class.forName(goodFSName).getDeclaredConstructor().newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else {
             fs = new DefaultFireStrategy();
         }
     }
 
-    public int getSPEED() {
-        return SPEED;
-    }
+
 
     public void setSPEED(int SPEED) {
         this.SPEED = SPEED;
@@ -65,22 +70,6 @@ public class Tank {
 
     public void setGroup(Group group) {
         this.group = group;
-    }
-
-    public int getWIDTH() {
-        return WIDTH;
-    }
-
-    public void setWIDTH(int WIDTH) {
-        this.WIDTH = WIDTH;
-    }
-
-    public int getHEIGHT() {
-        return HEIGHT;
-    }
-
-    public void setHEIGHT(int HEIGHT) {
-        this.HEIGHT = HEIGHT;
     }
 
 
@@ -100,9 +89,6 @@ public class Tank {
         this.y = y;
     }
 
-    public boolean isMoving() {
-        return moving;
-    }
 
     public void setMoving(boolean moving) {
         this.moving = moving;
