@@ -1,12 +1,9 @@
 package com.truekai.tank;
 
-import com.truekai.tank.fireStrategy.DefaultFireStrategy;
+
 import com.truekai.tank.fireStrategy.FireStrategy;
-import com.truekai.tank.fireStrategy.FourDirFireStrategy;
-import com.truekai.tank.prop.PropertyMgr;
 
 import java.awt.*;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 /**
@@ -16,16 +13,15 @@ import java.util.Random;
  */
 public class Tank {
     public int x, y;
-    public Dir dir = Dir.DOWN;
+    public Dir dir ;
     private int SPEED = 1;
     private boolean moving = true;
     private boolean living = true;//是否还或者或者
 
-    public TankFrame tf = null;
     public static int WIDTH = RessourceMange.tankU.getWidth();//宽度
     public static int HEIGHT = RessourceMange.tankU.getHeight();//高度
 
-    public Group group = Group.BAD;
+    public Group group ;
 
     private Random random = new Random();
     //坦克自己的长方形，用于碰撞检测
@@ -33,11 +29,14 @@ public class Tank {
 
     public FireStrategy fs;
 
-    public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
+
+    public GameModel gameModel;
+
+    public Tank(int x, int y, Dir dir, Group group, GameModel gameModel) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.tf = tf;
+        this.gameModel = gameModel;
         this.group = group;
 
         //构造子弹自身的rectangle
@@ -45,19 +44,7 @@ public class Tank {
         rectangle.y = this.y;
         rectangle.width = WIDTH;
         rectangle.height = HEIGHT;
-
-        if (group == Group.GOOD) {
-            String goodFSName = (String)PropertyMgr.get("MyTankFireStrategy");
-            try {
-                fs = (FireStrategy)Class.forName(goodFSName).getDeclaredConstructor().newInstance();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            fs = new DefaultFireStrategy();
-        }
     }
-
 
 
     public void setSPEED(int SPEED) {
@@ -104,7 +91,7 @@ public class Tank {
 
     public void paint(Graphics g) {
         if (!living) {
-            tf.tanks.remove(this);
+            gameModel.tanks.remove(this);
         }
         switch (dir) {
             case LEFT:
@@ -179,8 +166,8 @@ public class Tank {
     public void fire() {
         int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
         int bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
-        tf.MybulletList.add(new Bullet(bX, bY, this.dir, this.group, this.tf));
-        fs.fire(this);
+        gameModel.MybulletList.add(new Bullet(bX, bY, this.dir, this.group, gameModel));
+//        fs.fire(this);
     }
 
     public void die() {

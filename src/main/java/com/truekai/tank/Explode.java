@@ -16,12 +16,14 @@ public class Explode {
     private boolean living = true;
     TankFrame tf = null;
 
+    public GameModel gameModel;
+
     private int step = 0;//画到第几步了
 
-    public Explode(int x, int y, TankFrame tf) {
+    public Explode(int x, int y, GameModel gameModel) {
         this.x = x;
         this.y = y;
-        this.tf = tf;
+        this.gameModel = gameModel;
     }
 
 
@@ -31,7 +33,7 @@ public class Explode {
 
         if (step >= RessourceMange.explodes.length) {
             step = 0;
-            tf.explodes.remove(this);
+            gameModel.explodes.remove(this);
         }
     }
 }

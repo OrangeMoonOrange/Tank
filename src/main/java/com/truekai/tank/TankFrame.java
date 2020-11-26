@@ -14,20 +14,13 @@ import java.util.List;
  * @Desc:
  */
 public class TankFrame extends Frame {
-    Tank myTank = new Tank(400, 300, Dir.DOWN, Group.GOOD, this);
 
-    //敌人坦克
+    GameModel gameModel = new GameModel();
 
-    List<Tank> tanks = new ArrayList<>();
-    List<Bullet> MybulletList = new ArrayList<>();
-    List<Explode> explodes = new ArrayList<>();//爆炸
     public static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
 
 
     public TankFrame() {
-        myTank.setMoving(false);
-
-        myTank.setSPEED(10);
         setSize(GAME_WIDTH, GAME_HEIGHT);
         setResizable(false);
         setTitle("Tank");
@@ -60,36 +53,8 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
-        Color c = g.getColor();
-        g.setColor(Color.white);
-        g.drawString("子弹的数量：" + MybulletList.size(), 10, 60);
-        g.drawString("敌人的数量：" + tanks.size(), 10, 80);
-        g.drawString("爆炸的数量：" + explodes.size(), 10, 100);
-        g.setColor(c);
-        myTank.paint(g);
 
-
-        //画出地方坦克
-        for (int i = 0; i < tanks.size(); i++) {
-            tanks.get(i).paint(g);
-        }
-
-        //画出子弹
-        for (int i = 0; i < MybulletList.size(); i++) {
-            MybulletList.get(i).paint(g);
-        }
-        //画出爆炸
-        for (int i = 0; i < explodes.size(); i++) {
-            explodes.get(i).paint(g);
-        }
-
-        //监测子弹和坦克是否碰撞
-        for (int i = 0; i < MybulletList.size(); i++) {
-            for (int j = 0; j < tanks.size(); j++) {
-                MybulletList.get(i).collidewith(tanks.get(j));
-            }
-        }
-
+        gameModel.paint(g);
 
     }
 
@@ -116,7 +81,8 @@ public class TankFrame extends Frame {
                     bD = true;
                     break;
                 case KeyEvent.VK_CONTROL:
-                    myTank.fire();
+                    Tank mainTank = gameModel.getMainTank();
+                    mainTank.fire();
                     break;
                 default:
                     break;
@@ -147,10 +113,10 @@ public class TankFrame extends Frame {
         }
 
         private void setMainTankDir() {
+            Tank myTank = gameModel.getMainTank();//拿到主战坦克
             if (!bL && !bU && !bR && !bD) myTank.setMoving(false);
             else {
                 myTank.setMoving(true);
-
                 if (bL) myTank.setDir(Dir.LEFT);
                 if (bU) myTank.setDir(Dir.UP);
                 if (bR) myTank.setDir(Dir.RIGHT);

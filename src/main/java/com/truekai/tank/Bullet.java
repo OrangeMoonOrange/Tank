@@ -22,11 +22,13 @@ public class Bullet {
     //子弹自己的长方形，用于碰撞检测
     Rectangle rectangle = new Rectangle();
 
-    public Bullet(int x, int y, Dir dir, Group group, TankFrame tf) {
+    public GameModel gameModel;
+
+    public Bullet(int x, int y, Dir dir, Group group, GameModel gameModel) {
         this.dir = dir;
         this.x = x;
         this.y = y;
-        this.tf = tf;
+        this.gameModel=gameModel;
         this.group = group;
 
         //构造子弹自身的rectangle
@@ -35,12 +37,12 @@ public class Bullet {
         rectangle.width = WIDTH;
         rectangle.height = HEIGHT;
 
-        tf.MybulletList.add(this);//每次新new出的子弹都添加进去
+        gameModel.MybulletList.add(this);//每次新new出的子弹都添加进去
     }
 
     public void paint(Graphics g) {
         if (!live) {
-            this.tf.MybulletList.remove(this);
+            gameModel.MybulletList.remove(this);
         }
         switch (dir) {
             case LEFT:
@@ -93,7 +95,7 @@ public class Bullet {
             tank1.die();
             int ex = tank1.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
             int ey = tank1.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
-            tf.explodes.add(new Explode(ex, ey, tf));
+            gameModel.explodes.add(new Explode(ex, ey, gameModel));
         }
     }
 
