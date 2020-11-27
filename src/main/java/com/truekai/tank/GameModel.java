@@ -16,6 +16,9 @@ import java.util.List;
  * GameModel抽离出来 ，同时作为Facade 模式。负责与TankFream打交道
  */
 public class GameModel {
+
+    private static final GameModel INSTANCE = new GameModel();
+
     //游戏玩家自己的坦克
     Tank myTank = new Tank(400, 300, Dir.UP, Group.GOOD, this);
     //敌人坦克
@@ -29,7 +32,11 @@ public class GameModel {
 
     private List<GameObject> gameObjects = new ArrayList<>();//爆炸
 
-    public GameModel() {
+    public static GameModel getInstance() {
+        return INSTANCE;
+    }
+
+    private GameModel() {
         myTank.setSPEED(10);//设置 游戏玩家坦克的速度
         myTank.setMoving(false);//游戏开始的开始设置 玩家坦克是固定不动得
 
