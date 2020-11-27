@@ -13,7 +13,7 @@ import java.util.Random;
  */
 public class Tank extends GameObject {
     public int x, y;
-    public Dir dir ;
+    public Dir dir;
     private int SPEED = 1;
     private boolean moving = true;
     private boolean living = true;//是否还或者或者
@@ -21,7 +21,7 @@ public class Tank extends GameObject {
     public static int WIDTH = RessourceMange.tankU.getWidth();//宽度
     public static int HEIGHT = RessourceMange.tankU.getHeight();//高度
 
-    public Group group ;
+    public Group group;
 
     private Random random = new Random();
     //坦克自己的长方形，用于碰撞检测
@@ -29,6 +29,13 @@ public class Tank extends GameObject {
 
     public FireStrategy fs;
 
+    public Rectangle getRectangle() {
+        return rectangle;
+    }
+
+    public void setRectangle(Rectangle rectangle) {
+        this.rectangle = rectangle;
+    }
 
     public GameModel gameModel;
 
@@ -108,6 +115,10 @@ public class Tank extends GameObject {
                 break;
         }
         move();
+    }
+
+    public void stop() {
+        this.moving = false;
     }
 
     private void move() {

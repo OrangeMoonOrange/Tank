@@ -1,5 +1,8 @@
 package com.truekai.tank;
 
+import com.truekai.tank.chain.BulletTankCollider;
+import com.truekai.tank.chain.Collider;
+import com.truekai.tank.chain.TankTankCollider;
 import com.truekai.tank.constant.Constants;
 import com.truekai.tank.prop.PropertyMgr;
 
@@ -21,6 +24,9 @@ public class GameModel {
 //    java.util.List<Bullet> MybulletList = new ArrayList<>();
 //    List<Explode> explodes = new ArrayList<>();//爆炸
 
+    Collider collider = new BulletTankCollider();
+    Collider collider1 = new TankTankCollider();
+
 
     private List<GameObject> gameObjects = new ArrayList<>();//爆炸
 
@@ -33,7 +39,7 @@ public class GameModel {
         int initTankCount = Integer.valueOf((String) PropertyMgr.get(Constants.initTankCount));
         //初始化地方坦克
         for (int i = 0; i < initTankCount; i++) {
-            add(new Tank(200 + i * 80, 100, Dir.DOWN, Group.BAD, this));
+            add(new Tank(300 + i * 80, 100, Dir.DOWN, Group.BAD, this));
         }
     }
 
@@ -55,6 +61,17 @@ public class GameModel {
         myTank.paint(g);
         for (int i = 0; i < gameObjects.size(); i++) {
             gameObjects.get(i).paint(g);
+        }
+
+        //处理 碰撞的逻辑
+        //抽象出一个碰撞器
+        for (int i = 0; i < gameObjects.size(); i++) {
+            for (int j = i + 1; j < gameObjects.size(); j++) {
+                GameObject o1 = gameObjects.get(i);
+                GameObject o2 = gameObjects.get(j);
+                collider.collider(o1, o2);
+                collider1.collider(o1, o2);
+            }
         }
 
 //

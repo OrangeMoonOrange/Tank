@@ -24,6 +24,7 @@ public class Explode extends GameObject {
         this.x = x;
         this.y = y;
         this.gameModel = gameModel;
+        new Thread(()->new Audio("audio/explode.wav").play()).start();
     }
 
 
