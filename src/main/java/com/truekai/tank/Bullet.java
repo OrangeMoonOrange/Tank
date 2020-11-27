@@ -14,7 +14,6 @@ public class Bullet extends GameObject {
     private int x;//x位置
     private int y;//y位置
     public boolean live = true;//是否还活着  边界判断
-    private TankFrame tf;
     public static int WIDTH = RessourceMange.bulletD.getWidth();//宽度
     public static int HEIGHT = RessourceMange.bulletD.getHeight();//高度
     private Group group = Group.BAD;
@@ -28,7 +27,6 @@ public class Bullet extends GameObject {
         this.dir = dir;
         this.x = x;
         this.y = y;
-
         this.group = group;
 
         //构造子弹自身的rectangle
@@ -58,7 +56,6 @@ public class Bullet extends GameObject {
                 g.drawImage(RessourceMange.bulletR, x, y, null);
                 break;
         }
-
         move();
     }
 
@@ -84,18 +81,6 @@ public class Bullet extends GameObject {
             live = false;
         }
     }
-
-//    public void collidewith(Tank tank1) {
-//        if (this.group == tank1.getGroup()) return;
-//        //需要修改 会一直占用内存 已经修改
-//        if (this.rectangle.intersects(tank1.rectangle)) {
-//            this.die();
-//            tank1.die();
-//            int ex = tank1.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
-//            int ey = tank1.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
-//            gameModel.add(new Explode(ex, ey, gameModel));
-//        }
-//    }
 
    public void die() {
         this.live = false;

@@ -1,4 +1,4 @@
-initTankCount=10
+initTankCount=20
 
 #FireStrategy
 MyTankFireStrategy=com.truekai.tank.fireStrategy.FourDirFireStrategy

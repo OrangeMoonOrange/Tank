@@ -12,7 +12,7 @@ public class main {
     public static void main(String[] args) throws InterruptedException {
         TankFrame tr = new TankFrame();
         //music
-        //new Thread(()->new Audio("audio/war1.wav").loop()).start();
+       //new Thread(()->new Audio("audio/war1.wav").loop()).start();
 
 
         while (true) {

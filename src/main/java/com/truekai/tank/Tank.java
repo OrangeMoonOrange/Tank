@@ -1,7 +1,9 @@
 package com.truekai.tank;
 
 
+import com.truekai.tank.fireStrategy.DefaultFireStrategy;
 import com.truekai.tank.fireStrategy.FireStrategy;
+import com.truekai.tank.fireStrategy.FourDirFireStrategy;
 
 import java.awt.*;
 import java.util.Random;
@@ -32,20 +34,26 @@ public class Tank extends GameObject {
     public FireStrategy fs;
 
 
-
-
     public Tank(int x, int y, Dir dir, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-
         this.group = group;
-
         //构造子弹自身的rectangle
         rectangle.x = this.x;
         rectangle.y = this.y;
         rectangle.width = WIDTH;
         rectangle.height = HEIGHT;
+        //GameModel.getInstance().add(this);
+
+
+        //坦克发射子弹使用策略模式
+        //todo 这部分用什么策略可以用配置加载
+        if (group == Group.GOOD) {
+            fs = new FourDirFireStrategy();
+        } else {
+            fs = new DefaultFireStrategy();
+        }
     }
 
 
@@ -68,10 +76,6 @@ public class Tank extends GameObject {
                 break;
         }
         move();
-    }
-
-    public void stop() {
-        this.moving = false;
     }
 
     private void move() {
@@ -130,8 +134,8 @@ public class Tank extends GameObject {
     public void fire() {
         int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
         int bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
-        GameModel.getInstance().add(new Bullet(bX, bY, this.dir, this.group));
-//        fs.fire(this);
+        //GameModel.getInstance().add(new Bullet(bX, bY, this.dir, this.group));
+        fs.fire(this);
     }
 
     //回退到 上一步

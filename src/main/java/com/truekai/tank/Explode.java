@@ -13,18 +13,13 @@ public class Explode extends GameObject {
 
     private int x, y;
 
-    private boolean living = true;
-    TankFrame tf = null;
-
-
-
     private int step = 0;//画到第几步了
 
     public Explode(int x, int y) {
         this.x = x;
         this.y = y;
-
-        new Thread(()->new Audio("audio/explode.wav").play()).start();
+        GameModel.getInstance().add(this);
+        //new Thread(()->new Audio("audio/explode.wav").play()).start();
     }
 
 
