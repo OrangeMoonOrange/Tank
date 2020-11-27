@@ -2,6 +2,7 @@ package com.truekai.tank;
 
 import com.truekai.tank.chain.BulletTankCollider;
 import com.truekai.tank.chain.Collider;
+import com.truekai.tank.chain.ColliderChain;
 import com.truekai.tank.chain.TankTankCollider;
 import com.truekai.tank.constant.Constants;
 import com.truekai.tank.prop.PropertyMgr;
@@ -24,8 +25,8 @@ public class GameModel {
 //    java.util.List<Bullet> MybulletList = new ArrayList<>();
 //    List<Explode> explodes = new ArrayList<>();//爆炸
 
-    Collider collider = new BulletTankCollider();
-    Collider collider1 = new TankTankCollider();
+
+    ColliderChain colliderChain = new ColliderChain();
 
 
     private List<GameObject> gameObjects = new ArrayList<>();//爆炸
@@ -69,8 +70,7 @@ public class GameModel {
             for (int j = i + 1; j < gameObjects.size(); j++) {
                 GameObject o1 = gameObjects.get(i);
                 GameObject o2 = gameObjects.get(j);
-                collider.collider(o1, o2);
-                collider1.collider(o1, o2);
+                colliderChain.collider(o1, o2);
             }
         }
 
