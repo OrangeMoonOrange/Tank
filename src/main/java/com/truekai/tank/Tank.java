@@ -91,7 +91,7 @@ public class Tank extends GameObject {
 
     public void paint(Graphics g) {
         if (!living) {
-            gameModel.tanks.remove(this);
+            gameModel.remove(this);
         }
         switch (dir) {
             case LEFT:
@@ -166,7 +166,7 @@ public class Tank extends GameObject {
     public void fire() {
         int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
         int bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
-        gameModel.MybulletList.add(new Bullet(bX, bY, this.dir, this.group, gameModel));
+        gameModel.add(new Bullet(bX, bY, this.dir, this.group, gameModel));
 //        fs.fire(this);
     }
 

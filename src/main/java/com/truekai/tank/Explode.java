@@ -33,7 +33,7 @@ public class Explode extends GameObject {
 
         if (step >= RessourceMange.explodes.length) {
             step = 0;
-            gameModel.explodes.remove(this);
+            gameModel.remove(this);
         }
     }
 }

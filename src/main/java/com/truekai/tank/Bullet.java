@@ -37,12 +37,12 @@ public class Bullet extends GameObject {
         rectangle.width = WIDTH;
         rectangle.height = HEIGHT;
 
-        gameModel.MybulletList.add(this);//每次新new出的子弹都添加进去
+        gameModel.add(this);//每次新new出的子弹都添加进去
     }
 
     public void paint(Graphics g) {
         if (!live) {
-            gameModel.MybulletList.remove(this);
+            gameModel.remove(this);
         }
         switch (dir) {
             case LEFT:
@@ -95,7 +95,7 @@ public class Bullet extends GameObject {
             tank1.die();
             int ex = tank1.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
             int ey = tank1.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
-            gameModel.explodes.add(new Explode(ex, ey, gameModel));
+            gameModel.add(new Explode(ex, ey, gameModel));
         }
     }
 
