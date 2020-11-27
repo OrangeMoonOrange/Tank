@@ -32,13 +32,13 @@ public class Tank extends GameObject {
     public FireStrategy fs;
 
 
-    public GameModel gameModel;
 
-    public Tank(int x, int y, Dir dir, Group group, GameModel gameModel) {
+
+    public Tank(int x, int y, Dir dir, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.gameModel = gameModel;
+
         this.group = group;
 
         //构造子弹自身的rectangle
@@ -51,7 +51,7 @@ public class Tank extends GameObject {
 
     public void paint(Graphics g) {
         if (!living) {
-            gameModel.remove(this);
+            GameModel.getInstance().remove(this);
         }
         switch (dir) {
             case LEFT:
@@ -130,7 +130,7 @@ public class Tank extends GameObject {
     public void fire() {
         int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
         int bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
-        gameModel.add(new Bullet(bX, bY, this.dir, this.group, gameModel));
+        GameModel.getInstance().add(new Bullet(bX, bY, this.dir, this.group));
 //        fs.fire(this);
     }
 
@@ -194,19 +194,4 @@ public class Tank extends GameObject {
         this.rectangle = rectangle;
     }
 
-    public int getOldx() {
-        return oldx;
-    }
-
-    public void setOldx(int oldx) {
-        this.oldx = oldx;
-    }
-
-    public int getOldy() {
-        return oldy;
-    }
-
-    public void setOldy(int oldy) {
-        this.oldy = oldy;
-    }
 }

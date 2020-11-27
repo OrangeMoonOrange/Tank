@@ -9,7 +9,7 @@ import com.truekai.tank.*;
  */
 public class TankWallCollider implements Collider {
     @Override
-    public boolean collider(GameObject o1, GameObject o2, GameModel gameModel) {
+    public boolean collider(GameObject o1, GameObject o2) {
         if (o1 instanceof Tank && o2 instanceof Wall) {
             Tank tank = (Tank) o1;
             Wall wall = (Wall) o2;

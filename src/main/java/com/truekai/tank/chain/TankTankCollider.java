@@ -12,7 +12,7 @@ import com.truekai.tank.Tank;
  */
 public class TankTankCollider implements Collider {
     @Override
-    public boolean collider(GameObject o1, GameObject o2, GameModel gameModel) {
+    public boolean collider(GameObject o1, GameObject o2) {
         if (o1 instanceof Tank && o2 instanceof Tank) {
             Tank tank1 = (Tank) o2;
             Tank tank = (Tank) o1;

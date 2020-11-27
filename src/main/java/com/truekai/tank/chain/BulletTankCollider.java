@@ -9,7 +9,7 @@ import com.truekai.tank.*;
  */
 public class BulletTankCollider implements Collider {
     @Override
-    public boolean collider(GameObject o1, GameObject o2, GameModel gameModel) {
+    public boolean collider(GameObject o1, GameObject o2) {
         if (o1 instanceof Bullet && o2 instanceof Tank) {
             Bullet bu = (Bullet) o1;
             Tank tank = (Tank) o2;
@@ -21,7 +21,7 @@ public class BulletTankCollider implements Collider {
                 tank.die();
                 int ex = tank.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
                 int ey = tank.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
-                gameModel.add(new Explode(ex, ey, gameModel));
+                GameModel.getInstance().add(new Explode(ex, ey));
             }
         } else if (o1 instanceof Tank && o2 instanceof Bullet) {
             Bullet bu = (Bullet) o2;
@@ -34,7 +34,7 @@ public class BulletTankCollider implements Collider {
                 tank.die();
                 int ex = tank.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
                 int ey = tank.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
-                gameModel.add(new Explode(ex, ey, gameModel));
+                GameModel.getInstance().add(new Explode(ex, ey));
             }
         }
         return true;

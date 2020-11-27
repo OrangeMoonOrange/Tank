@@ -16,14 +16,14 @@ public class Explode extends GameObject {
     private boolean living = true;
     TankFrame tf = null;
 
-    public GameModel gameModel;
+
 
     private int step = 0;//画到第几步了
 
-    public Explode(int x, int y, GameModel gameModel) {
+    public Explode(int x, int y) {
         this.x = x;
         this.y = y;
-        this.gameModel = gameModel;
+
         new Thread(()->new Audio("audio/explode.wav").play()).start();
     }
 
@@ -34,7 +34,7 @@ public class Explode extends GameObject {
 
         if (step >= RessourceMange.explodes.length) {
             step = 0;
-            gameModel.remove(this);
+            GameModel.getInstance().remove(this);
         }
     }
 }

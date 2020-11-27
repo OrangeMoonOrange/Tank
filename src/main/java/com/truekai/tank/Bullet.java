@@ -22,13 +22,13 @@ public class Bullet extends GameObject {
     //子弹自己的长方形，用于碰撞检测
     Rectangle rectangle = new Rectangle();
 
-    public GameModel gameModel;
 
-    public Bullet(int x, int y, Dir dir, Group group, GameModel gameModel) {
+
+    public Bullet(int x, int y, Dir dir, Group group) {
         this.dir = dir;
         this.x = x;
         this.y = y;
-        this.gameModel=gameModel;
+
         this.group = group;
 
         //构造子弹自身的rectangle
@@ -37,12 +37,12 @@ public class Bullet extends GameObject {
         rectangle.width = WIDTH;
         rectangle.height = HEIGHT;
 
-        gameModel.add(this);//每次新new出的子弹都添加进去
+        GameModel.getInstance().add(this);//每次新new出的子弹都添加进去
     }
 
     public void paint(Graphics g) {
         if (!live) {
-            gameModel.remove(this);
+            GameModel.getInstance().remove(this);
         }
         switch (dir) {
             case LEFT:

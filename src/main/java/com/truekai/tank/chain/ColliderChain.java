@@ -28,9 +28,9 @@ public class ColliderChain implements Collider {
         list.add(collider);
     }
 
-    public boolean collider(GameObject o1, GameObject o2, GameModel gameModel) {
+    public boolean collider(GameObject o1, GameObject o2) {
         for (int i = 0; i < list.size(); i++)
-            if (!list.get(i).collider(o1, o2, gameModel)) return false;
+            if (!list.get(i).collider(o1, o2)) return false;
         return true;
     }
 }

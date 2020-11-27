@@ -9,5 +9,5 @@ import com.truekai.tank.GameObject;
  * @Desc: 碰撞器
  */
 public interface Collider {
-    boolean collider(GameObject o1, GameObject o2, GameModel gameModel);
+    boolean collider(GameObject o1, GameObject o2);
 }

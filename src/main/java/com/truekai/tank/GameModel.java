@@ -18,9 +18,10 @@ import java.util.List;
 public class GameModel {
 
     private static final GameModel INSTANCE = new GameModel();
+    
 
     //游戏玩家自己的坦克
-    Tank myTank = new Tank(400, 300, Dir.UP, Group.GOOD, this);
+    Tank myTank = new Tank(400, 300, Dir.UP, Group.GOOD);
     //敌人坦克
 //    java.util.List<Tank> tanks = new ArrayList<>();
 //    java.util.List<Bullet> MybulletList = new ArrayList<>();
@@ -45,7 +46,7 @@ public class GameModel {
         int initTankCount = Integer.valueOf((String) PropertyMgr.get(Constants.initTankCount));
         //初始化地方坦克
         for (int i = 0; i < initTankCount; i++)
-            add(new Tank(100 + i * 80, 100, Dir.DOWN, Group.BAD, this));
+            add(new Tank(100 + i * 80, 100, Dir.DOWN, Group.BAD));
 
         //添加墙
         add(new Wall(150, 150, 200, 50));
@@ -80,7 +81,7 @@ public class GameModel {
             for (int j = i + 1; j < gameObjects.size(); j++) {
                 GameObject o1 = gameObjects.get(i);
                 GameObject o2 = gameObjects.get(j);
-                colliderChain.collider(o1, o2, this);
+                colliderChain.collider(o1, o2);
             }
         }
 
