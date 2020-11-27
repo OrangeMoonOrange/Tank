@@ -8,7 +8,7 @@ import java.util.Comparator;
  * @Date: 2020/11/21 22:56
  * @Desc: 子弹类
  */
-public class Bullet {
+public class Bullet extends GameObject {
     private int SPEED = 5;//速度
     private Dir dir;//方向
     private int x;//x位置

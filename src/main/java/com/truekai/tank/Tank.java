@@ -11,7 +11,7 @@ import java.util.Random;
  * @Date: 2020/10/15 20:10
  * @Desc: 定义坦克类
  */
-public class Tank {
+public class Tank extends GameObject {
     public int x, y;
     public Dir dir ;
     private int SPEED = 1;

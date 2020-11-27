@@ -7,7 +7,7 @@ import java.awt.*;
  * @Date: 2020/11/22 18:57
  * @Desc: 爆炸
  */
-public class Explode {
+public class Explode extends GameObject {
     public static int WIDTH = RessourceMange.explodes[0].getWidth();
     public static int HEIGHT = RessourceMange.explodes[0].getHeight();
 
