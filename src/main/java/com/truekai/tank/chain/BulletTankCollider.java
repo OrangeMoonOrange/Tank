@@ -1,8 +1,6 @@
 package com.truekai.tank.chain;
 
-import com.truekai.tank.Bullet;
-import com.truekai.tank.GameObject;
-import com.truekai.tank.Tank;
+import com.truekai.tank.*;
 
 /**
  * @Author: xk
@@ -11,15 +9,34 @@ import com.truekai.tank.Tank;
  */
 public class BulletTankCollider implements Collider {
     @Override
-    public void collider(GameObject o1, GameObject o2) {
+    public boolean collider(GameObject o1, GameObject o2, GameModel gameModel) {
         if (o1 instanceof Bullet && o2 instanceof Tank) {
             Bullet bu = (Bullet) o1;
             Tank tank = (Tank) o2;
-            bu.collidewith(tank);
+            if (bu.getGroup() == tank.getGroup())
+                return false;
+            //需要修改 会一直占用内存 已经修改
+            if (bu.getRectangle().intersects(tank.getRectangle())) {
+                bu.die();
+                tank.die();
+                int ex = tank.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
+                int ey = tank.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
+                gameModel.add(new Explode(ex, ey, gameModel));
+            }
         } else if (o1 instanceof Tank && o2 instanceof Bullet) {
             Bullet bu = (Bullet) o2;
             Tank tank = (Tank) o1;
-            bu.collidewith(tank);
+
+            if (bu.getGroup() == tank.getGroup())
+                return false;
+            if (bu.getRectangle().intersects(tank.getRectangle())) {
+                bu.die();
+                tank.die();
+                int ex = tank.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
+                int ey = tank.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
+                gameModel.add(new Explode(ex, ey, gameModel));
+            }
         }
+        return true;
     }
 }

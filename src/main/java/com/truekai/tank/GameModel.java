@@ -1,9 +1,7 @@
 package com.truekai.tank;
 
-import com.truekai.tank.chain.BulletTankCollider;
-import com.truekai.tank.chain.Collider;
+
 import com.truekai.tank.chain.ColliderChain;
-import com.truekai.tank.chain.TankTankCollider;
 import com.truekai.tank.constant.Constants;
 import com.truekai.tank.prop.PropertyMgr;
 
@@ -39,9 +37,14 @@ public class GameModel {
         //初始化敌人坦克
         int initTankCount = Integer.valueOf((String) PropertyMgr.get(Constants.initTankCount));
         //初始化地方坦克
-        for (int i = 0; i < initTankCount; i++) {
-            add(new Tank(300 + i * 80, 100, Dir.DOWN, Group.BAD, this));
-        }
+        for (int i = 0; i < initTankCount; i++)
+            add(new Tank(100 + i * 80, 100, Dir.DOWN, Group.BAD, this));
+
+        //添加墙
+        add(new Wall(150, 150, 200, 50));
+        add(new Wall(550, 300, 50, 200));
+        add(new Wall(350, 300, 50, 200));
+
     }
 
     public void add(GameObject gameObject) {
@@ -70,7 +73,7 @@ public class GameModel {
             for (int j = i + 1; j < gameObjects.size(); j++) {
                 GameObject o1 = gameObjects.get(i);
                 GameObject o2 = gameObjects.get(j);
-                colliderChain.collider(o1, o2);
+                colliderChain.collider(o1, o2, this);
             }
         }
 

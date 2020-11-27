@@ -1,5 +1,6 @@
 package com.truekai.tank.chain;
 
+import com.truekai.tank.GameModel;
 import com.truekai.tank.GameObject;
 
 /**
@@ -8,5 +9,5 @@ import com.truekai.tank.GameObject;
  * @Desc: 碰撞器
  */
 public interface Collider {
-    void collider(GameObject o1, GameObject o2);
+    boolean collider(GameObject o1, GameObject o2, GameModel gameModel);
 }

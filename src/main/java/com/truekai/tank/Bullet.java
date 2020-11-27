@@ -13,7 +13,7 @@ public class Bullet extends GameObject {
     private Dir dir;//方向
     private int x;//x位置
     private int y;//y位置
-    private boolean live = true;//是否还活着  边界判断
+    public boolean live = true;//是否还活着  边界判断
     private TankFrame tf;
     public static int WIDTH = RessourceMange.bulletD.getWidth();//宽度
     public static int HEIGHT = RessourceMange.bulletD.getHeight();//高度
@@ -85,21 +85,19 @@ public class Bullet extends GameObject {
         }
     }
 
-    public void collidewith(Tank tank1) {
-        if (this.group == tank1.getGroup()) return;
+//    public void collidewith(Tank tank1) {
+//        if (this.group == tank1.getGroup()) return;
+//        //需要修改 会一直占用内存 已经修改
+//        if (this.rectangle.intersects(tank1.rectangle)) {
+//            this.die();
+//            tank1.die();
+//            int ex = tank1.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
+//            int ey = tank1.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
+//            gameModel.add(new Explode(ex, ey, gameModel));
+//        }
+//    }
 
-
-        //需要修改 会一直占用内存 已经修改
-        if (this.rectangle.intersects(tank1.rectangle)) {
-            this.die();
-            tank1.die();
-            int ex = tank1.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
-            int ey = tank1.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
-            gameModel.add(new Explode(ex, ey, gameModel));
-        }
-    }
-
-    private void die() {
+   public void die() {
         this.live = false;
     }
 
@@ -109,5 +107,21 @@ public class Bullet extends GameObject {
 
     public void setSPEED(int SPEED) {
         this.SPEED = SPEED;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
+    public Rectangle getRectangle() {
+        return rectangle;
+    }
+
+    public void setRectangle(Rectangle rectangle) {
+        this.rectangle = rectangle;
     }
 }

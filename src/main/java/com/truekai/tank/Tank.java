@@ -13,6 +13,8 @@ import java.util.Random;
  */
 public class Tank extends GameObject {
     public int x, y;
+
+    public int oldx, oldy;//老旧的
     public Dir dir;
     private int SPEED = 1;
     private boolean moving = true;
@@ -29,13 +31,6 @@ public class Tank extends GameObject {
 
     public FireStrategy fs;
 
-    public Rectangle getRectangle() {
-        return rectangle;
-    }
-
-    public void setRectangle(Rectangle rectangle) {
-        this.rectangle = rectangle;
-    }
 
     public GameModel gameModel;
 
@@ -53,6 +48,101 @@ public class Tank extends GameObject {
         rectangle.height = HEIGHT;
     }
 
+
+    public void paint(Graphics g) {
+        if (!living) {
+            gameModel.remove(this);
+        }
+        switch (dir) {
+            case LEFT:
+                g.drawImage(RessourceMange.tankL, x, y, null);
+                break;
+            case UP:
+                g.drawImage(RessourceMange.tankU, x, y, null);
+                break;
+            case DOWN:
+                g.drawImage(RessourceMange.tankD, x, y, null);
+                break;
+            case RIGHT:
+                g.drawImage(RessourceMange.tankR, x, y, null);
+                break;
+        }
+        move();
+    }
+
+    public void stop() {
+        this.moving = false;
+    }
+
+    private void move() {
+        oldx = x;//记录上一步走的x y坐标
+        oldy = y;
+        if (!moving) return;
+        switch (dir) {
+            case LEFT:
+                x -= SPEED;
+                break;
+            case UP:
+                y -= SPEED;
+                break;
+            case DOWN:
+                y += SPEED;
+                break;
+            case RIGHT:
+                x += SPEED;
+                break;
+        }
+        if (this.group == Group.BAD && random.nextInt(10) > 8) {
+            this.fire();
+        }
+        if (this.group == Group.BAD && random.nextInt(100) > 95) {
+            randomDir();
+        }
+
+        boundcheck();
+
+        //移动了就必须更新自己的rectangle的位置
+        rectangle.x = this.x;
+        rectangle.y = this.y;
+    }
+
+    //边界检测
+    private void boundcheck() {
+        if (this.x < 2) {
+            x = 2;
+        }
+        if (this.y < 28) {
+            y = 28;
+        }
+        if (this.x > TankFrame.GAME_WIDTH - Tank.WIDTH) {
+            x = TankFrame.GAME_WIDTH - Tank.WIDTH;
+        }
+        if (this.y > TankFrame.GAME_HEIGHT - Tank.HEIGHT) {
+            y = TankFrame.GAME_HEIGHT - Tank.HEIGHT;
+        }
+    }
+
+    private void randomDir() {
+        if (this.group == Group.GOOD) return;
+        this.dir = Dir.values()[random.nextInt(4)];
+    }
+
+    public void fire() {
+        int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
+        int bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
+        gameModel.add(new Bullet(bX, bY, this.dir, this.group, gameModel));
+//        fs.fire(this);
+    }
+
+    //回退到 上一步
+    public void back() {
+        x = oldx;
+        y = oldy;
+    }
+
+    public void die() {
+        this.living = false;
+    }
 
     public void setSPEED(int SPEED) {
         this.SPEED = SPEED;
@@ -96,92 +186,27 @@ public class Tank extends GameObject {
         this.dir = dir;
     }
 
-    public void paint(Graphics g) {
-        if (!living) {
-            gameModel.remove(this);
-        }
-        switch (dir) {
-            case LEFT:
-                g.drawImage(RessourceMange.tankL, x, y, null);
-                break;
-            case UP:
-                g.drawImage(RessourceMange.tankU, x, y, null);
-                break;
-            case DOWN:
-                g.drawImage(RessourceMange.tankD, x, y, null);
-                break;
-            case RIGHT:
-                g.drawImage(RessourceMange.tankR, x, y, null);
-                break;
-        }
-        move();
+    public Rectangle getRectangle() {
+        return rectangle;
     }
 
-    public void stop() {
-        this.moving = false;
+    public void setRectangle(Rectangle rectangle) {
+        this.rectangle = rectangle;
     }
 
-    private void move() {
-        if (!moving) return;
-        switch (dir) {
-            case LEFT:
-                x -= SPEED;
-                break;
-            case UP:
-                y -= SPEED;
-                break;
-            case DOWN:
-                y += SPEED;
-                break;
-            case RIGHT:
-                x += SPEED;
-                break;
-        }
-
-
-        if (this.group == Group.BAD && random.nextInt(10) > 8) {
-            this.fire();
-        }
-        if (this.group == Group.BAD && random.nextInt(100) > 95) {
-            randomDir();
-        }
-
-        boundcheck();
-
-        //移动了就必须更新自己的rectangle的位置
-        rectangle.x = this.x;
-        rectangle.y = this.y;
+    public int getOldx() {
+        return oldx;
     }
 
-    //边界检测
-    private void boundcheck() {
-        if (this.x < 2) {
-            x = 2;
-        }
-        if (this.y < 28) {
-            y = 28;
-        }
-        if (this.x > TankFrame.GAME_WIDTH - Tank.WIDTH) {
-            x = TankFrame.GAME_WIDTH - Tank.WIDTH;
-        }
-        if (this.y > TankFrame.GAME_HEIGHT - Tank.HEIGHT) {
-            y = TankFrame.GAME_HEIGHT - Tank.HEIGHT;
-        }
+    public void setOldx(int oldx) {
+        this.oldx = oldx;
     }
 
-    private void randomDir() {
-        if (this.group == Group.GOOD) return;
-        this.dir = Dir.values()[random.nextInt(4)];
+    public int getOldy() {
+        return oldy;
     }
 
-    public void fire() {
-        int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
-        int bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
-        gameModel.add(new Bullet(bX, bY, this.dir, this.group, gameModel));
-//        fs.fire(this);
-    }
-
-    public void die() {
-        this.living = false;
+    public void setOldy(int oldy) {
+        this.oldy = oldy;
     }
 }

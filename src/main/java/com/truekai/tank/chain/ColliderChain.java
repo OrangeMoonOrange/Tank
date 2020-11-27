@@ -1,5 +1,6 @@
 package com.truekai.tank.chain;
 
+import com.truekai.tank.GameModel;
 import com.truekai.tank.GameObject;
 
 import java.util.LinkedList;
@@ -15,8 +16,11 @@ public class ColliderChain implements Collider {
     private List<Collider> list = new LinkedList<>();
 
     public ColliderChain() {
+        //todo 应该把这些collider放到配置文件里面
         add(new TankTankCollider());
         add(new BulletTankCollider());
+        add(new BulletWallCollider());
+        add(new TankWallCollider());
     }
 
     //两个 collider直接连接也可以的
@@ -24,9 +28,9 @@ public class ColliderChain implements Collider {
         list.add(collider);
     }
 
-    public void collider(GameObject o1, GameObject o2) {
-        for (int i = 0; i < list.size(); i++) {
-            list.get(i).collider(o1, o2);
-        }
+    public boolean collider(GameObject o1, GameObject o2, GameModel gameModel) {
+        for (int i = 0; i < list.size(); i++)
+            if (!list.get(i).collider(o1, o2, gameModel)) return false;
+        return true;
     }
 }

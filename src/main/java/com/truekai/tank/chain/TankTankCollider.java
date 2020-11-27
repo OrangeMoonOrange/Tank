@@ -1,6 +1,7 @@
 package com.truekai.tank.chain;
 
 import com.truekai.tank.Bullet;
+import com.truekai.tank.GameModel;
 import com.truekai.tank.GameObject;
 import com.truekai.tank.Tank;
 
@@ -11,15 +12,16 @@ import com.truekai.tank.Tank;
  */
 public class TankTankCollider implements Collider {
     @Override
-    public void collider(GameObject o1, GameObject o2) {
+    public boolean collider(GameObject o1, GameObject o2, GameModel gameModel) {
         if (o1 instanceof Tank && o2 instanceof Tank) {
             Tank tank1 = (Tank) o2;
             Tank tank = (Tank) o1;
-            if(tank.getRectangle().intersects(tank1.getRectangle())){
-                tank.stop();
-                tank1.stop();
+            if (tank.getRectangle().intersects(tank1.getRectangle())) {
+                //如果坦克和坦克相撞了 就回到上一步的位置
+                tank.back();
+                tank1.back();
             }
-
         }
+        return true;
     }
 }
