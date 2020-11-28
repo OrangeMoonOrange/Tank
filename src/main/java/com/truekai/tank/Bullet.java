@@ -11,8 +11,7 @@ import java.util.Comparator;
 public class Bullet extends GameObject {
     private int SPEED = 5;//速度
     private Dir dir;//方向
-    private int x;//x位置
-    private int y;//y位置
+
     public boolean live = true;//是否还活着  边界判断
     public static int WIDTH = RessourceMange.bulletD.getWidth();//宽度
     public static int HEIGHT = RessourceMange.bulletD.getHeight();//高度
@@ -34,8 +33,6 @@ public class Bullet extends GameObject {
         rectangle.y = this.y;
         rectangle.width = WIDTH;
         rectangle.height = HEIGHT;
-
-        GameModel.getInstance().add(this);//每次新new出的子弹都添加进去
     }
 
     public void paint(Graphics g) {
@@ -57,6 +54,16 @@ public class Bullet extends GameObject {
                 break;
         }
         move();
+    }
+
+    @Override
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
     }
 
     private void move() {

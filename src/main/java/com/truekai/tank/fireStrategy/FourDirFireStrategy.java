@@ -20,8 +20,6 @@ public class FourDirFireStrategy implements FireStrategy {
         for (Dir dir : dirs) {
             Bullet bullet = new Bullet(bX, bY, dir, t.group);
             bullet.setSPEED(20);
-
-
             GameModel.getInstance().add(bullet);
         }
     }

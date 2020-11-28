@@ -73,7 +73,6 @@ public class GameModel {
         for (int i = 0; i < gameObjects.size(); i++) {
             gameObjects.get(i).paint(g);
         }
-
         //处理 碰撞的逻辑
         //抽象出一个碰撞器
         for (int i = 0; i < gameObjects.size(); i++) {

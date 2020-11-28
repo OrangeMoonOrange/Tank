@@ -11,7 +11,7 @@ public class Explode extends GameObject {
     public static int WIDTH = RessourceMange.explodes[0].getWidth();
     public static int HEIGHT = RessourceMange.explodes[0].getHeight();
 
-    private int x, y;
+
 
     private int step = 0;//画到第几步了
 
@@ -31,5 +31,15 @@ public class Explode extends GameObject {
             step = 0;
             GameModel.getInstance().remove(this);
         }
+    }
+
+    @Override
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
     }
 }

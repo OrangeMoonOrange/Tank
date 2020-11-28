@@ -1,7 +1,10 @@
 package com.truekai.tank.fireStrategy;
 
 import com.truekai.tank.Bullet;
+import com.truekai.tank.GameModel;
 import com.truekai.tank.Tank;
+import com.truekai.tank.decorator.LineDecorator;
+import com.truekai.tank.decorator.RectDecorator;
 
 /**
  * @Author: xk
@@ -11,8 +14,14 @@ import com.truekai.tank.Tank;
 public class DefaultFireStrategy implements FireStrategy {
     @Override
     public void fire(Tank t) {
-        int bX = t.getX() + Tank.WIDTH/2 - Bullet.WIDTH/2;
-        int bY = t.getY() + Tank.HEIGHT/2 - Bullet.HEIGHT/2;
-        new Bullet(bX, bY, t.dir, t.group);
+        int bX = t.getX() + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
+        int bY = t.getY() + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
+        //  GameModel.getInstance().add( new Bullet(bX, bY, t.dir, t.group));
+
+        //为什么这两个 同时被画出来了？？
+        GameModel.getInstance().add(
+                new RectDecorator(
+                        new LineDecorator(
+                                new Bullet(bX, bY, t.dir, t.group))));
     }
 }

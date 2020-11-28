@@ -14,7 +14,7 @@ import java.util.Random;
  * @Desc: 定义坦克类
  */
 public class Tank extends GameObject {
-    public int x, y;
+
 
     public int oldx, oldy;//老旧的
     public Dir dir;
@@ -76,6 +76,16 @@ public class Tank extends GameObject {
                 break;
         }
         move();
+    }
+
+    @Override
+    public int getWidth() {
+        return 0;
+    }
+
+    @Override
+    public int getHeight() {
+        return 0;
     }
 
     private void move() {
