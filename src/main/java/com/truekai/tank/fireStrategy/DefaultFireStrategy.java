@@ -16,12 +16,12 @@ public class DefaultFireStrategy implements FireStrategy {
     public void fire(Tank t) {
         int bX = t.getX() + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
         int bY = t.getY() + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
-        //  GameModel.getInstance().add( new Bullet(bX, bY, t.dir, t.group));
+       GameModel.getInstance().add( new Bullet(bX, bY, t.dir, t.group));
 
-        //为什么这两个 同时被画出来了？？
-        GameModel.getInstance().add(
-                new RectDecorator(
-                        new LineDecorator(
-                                new Bullet(bX, bY, t.dir, t.group))));
+        //子弹的装饰器
+//        GameModel.getInstance().add(
+//                new RectDecorator(
+//                        new LineDecorator(
+//                                new Bullet(bX, bY, t.dir, t.group))));
     }
 }

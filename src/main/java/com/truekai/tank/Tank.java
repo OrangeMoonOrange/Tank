@@ -4,8 +4,15 @@ package com.truekai.tank;
 import com.truekai.tank.fireStrategy.DefaultFireStrategy;
 import com.truekai.tank.fireStrategy.FireStrategy;
 import com.truekai.tank.fireStrategy.FourDirFireStrategy;
+import com.truekai.tank.observer.Event;
+import com.truekai.tank.observer.TankFireEvent;
+import com.truekai.tank.observer.TankFireHandle;
+import com.truekai.tank.observer.TankFireObserver;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -152,6 +159,16 @@ public class Tank extends GameObject {
     public void back() {
         x = oldx;
         y = oldy;
+    }
+
+    private List<TankFireObserver> tankFireObservers = Arrays.asList(new TankFireHandle());
+
+
+    public void handleFireKey() {
+        TankFireEvent event = new TankFireEvent(this);
+        for (TankFireObserver observer : tankFireObservers) {
+            observer.tankFireAction(event);
+        }
     }
 
     public void die() {
