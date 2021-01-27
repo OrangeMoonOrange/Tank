@@ -10,6 +10,7 @@ import java.util.Properties;
  */
 public class PropertyMgr {
 	static Properties props = new Properties();
+
 	
 	static {
 		try {
