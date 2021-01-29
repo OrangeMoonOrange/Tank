@@ -1,19 +1,11 @@
 package com.truekai.TankNet;
 
-import com.truekai.tank.Dir;
-import com.truekai.tank.Group;
-import com.truekai.tank.Tank;
 import com.truekai.tank.TankFrame;
 import io.netty.bootstrap.Bootstrap;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.util.ReferenceCountUtil;
-
-import java.util.UUID;
 
 public class Client {
 
@@ -55,9 +47,8 @@ public class Client {
         }
     }
 
-    public void send(String msg) {
-        ByteBuf buf = Unpooled.copiedBuffer(msg.getBytes());
-        channel.writeAndFlush(buf);
+    public void send(TankJoinMsg msg) {
+        this.channel.writeAndFlush(msg);
     }
 
     public static void main(String[] args) throws Exception {
@@ -65,8 +56,8 @@ public class Client {
     }
 
     public void closeConnect() {
-        this.send("_bye_");
-        //channel.close();
+//        this.send("_bye_");
+//        //channel.close();
     }
 }
 
@@ -75,51 +66,33 @@ class ClientChannelInitializer extends ChannelInitializer<SocketChannel> {
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
         ch.pipeline()
-                .addLast(new TankMsgDecoder())//客户端是的两边都需要处理的 ，所以双向编码和解码
-                .addLast(new TankMsgEncoder())
+                .addLast(new TankJoinMsgDecoder())//客户端是的两边都需要处理的 ，所以双向编码和解码
+                .addLast(new TankJoinMsgEncoder())
                 .addLast(new ClientHandler());
     }
 
 }
 
 //因为 这里只处理 TankMsg这一种 消息 ，所以 使用这个
-class ClientHandler extends SimpleChannelInboundHandler<TankMsg> {
+class ClientHandler extends SimpleChannelInboundHandler<TankJoinMsg> {
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, TankMsg tankMsg) throws Exception {
-        System.out.println(tankMsg);
+    protected void channelRead0(ChannelHandlerContext ctx, TankJoinMsg tankJoinMsg) throws Exception {
+
+        //这里接收 到TankJoinMsg的处理方法
+        /**
+         * 1，
+         */
+
+        tankJoinMsg.handle();
+
 
     }
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
 
-        ctx.writeAndFlush(new TankMsg(TankFrame.INSTANCE.getMainTank()));//初始化之后 会把自己的状态写出去
+        ctx.writeAndFlush(new TankJoinMsg(TankFrame.INSTANCE.getMainTank()));//初始化之后 会把自己的状态写出去
     }
 }
 
-//class ClientHandler extends ChannelInboundHandlerAdapter {
-//
-//    @Override
-//    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-//        ByteBuf buf = null;
-//        try {
-//            buf = (ByteBuf) msg;
-//            byte[] bytes = new byte[buf.readableBytes()];
-//            buf.getBytes(buf.readerIndex(), bytes);
-//            String msgAccepted = new String(bytes);
-////			ClientFrame.INSTANCE.updateText(msgAccepted);
-//            // System.out.println(buf);
-//            // System.out.println(buf.refCnt());
-//        } finally {
-//            if (buf != null)
-//                ReferenceCountUtil.release(buf);
-//            // System.out.println(buf.refCnt());
-//        }
-//    }
-//
-//    @Override
-//    public void channelActive(ChannelHandlerContext ctx) throws Exception {
-//        ctx.writeAndFlush(new TankMsg(TankFrame.INSTANCE.getMainTank()));//初始化之后 会把自己的状态写出去
-//    }
-//
-//}
+

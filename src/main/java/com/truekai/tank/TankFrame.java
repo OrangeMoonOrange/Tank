@@ -1,11 +1,13 @@
 package com.truekai.tank;
 
+import org.omg.CORBA.PUBLIC_MEMBER;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
 
 /**
@@ -14,24 +16,34 @@ import java.util.List;
  * @Desc:
  */
 public class TankFrame extends Frame {
-    Tank myTank = new Tank(400, 300, Dir.DOWN, Group.GOOD, this);
+    public static final TankFrame INSTANCE = new TankFrame();
+    Random r = new Random();
+    Tank myTank = new Tank(r.nextInt(GAME_HEIGHT-100), r.nextInt(GAME_WIDTH-100), Dir.DOWN, Group.GOOD, this);
 
     //敌人坦克
+//    List<Tank> tanks = new ArrayList<>();
 
-    List<Tank> tanks = new ArrayList<>();
+    HashMap<UUID, Tank> tanks = new HashMap<>();
     List<Bullet> MybulletList = new ArrayList<>();
     List<Explode> explodes = new ArrayList<>();//爆炸
     public static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
 
 
+    public void addTank(Tank t) {
+        this.tanks.put(t.getId(), t);
+    }
+
+    public Tank findByUUID(UUID id) {
+        return this.tanks.get(id);
+    }
+
     public TankFrame() {
-        myTank.setMoving(false);
+//        myTank.setMoving(false);
 
         myTank.setSPEED(10);
         setSize(GAME_WIDTH, GAME_HEIGHT);
         setResizable(false);
         setTitle("Tank");
-        setVisible(true);
         this.addKeyListener(new MyKeyListener());
         addWindowListener(new WindowAdapter() {
             @Override
@@ -68,11 +80,17 @@ public class TankFrame extends Frame {
         g.setColor(c);
         myTank.paint(g);
 
+        //画出 坦克的UUID
+
+
+
 
         //画出地方坦克
-        for (int i = 0; i < tanks.size(); i++) {
-            tanks.get(i).paint(g);
+        for (UUID uuid : tanks.keySet()) {
+            tanks.get(uuid).paint(g);
+
         }
+
 
         //画出子弹
         for (int i = 0; i < MybulletList.size(); i++) {
@@ -156,7 +174,14 @@ public class TankFrame extends Frame {
                 if (bR) myTank.setDir(Dir.RIGHT);
                 if (bD) myTank.setDir(Dir.DOWN);
             }
-
         }
+
+
     }
+
+    public Tank getMainTank() {
+        return myTank;
+    }
+
+
 }

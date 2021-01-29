@@ -1,7 +1,10 @@
 package com.truekai.tank;
 
+import com.truekai.TankNet.TankJoinMsg;
+
 import java.awt.*;
 import java.util.Random;
+import java.util.UUID;
 
 /**
  * @Author: xk
@@ -12,7 +15,7 @@ public class Tank {
     private int x, y;
     private Dir dir = Dir.DOWN;
     private int SPEED = 1;
-    private boolean moving = true;
+    private boolean moving = false;
     private boolean living = true;//是否还或者或者
 
     private TankFrame tf = null;
@@ -24,6 +27,8 @@ public class Tank {
     private Random random = new Random();
     //坦克自己的长方形，用于碰撞检测
     Rectangle rectangle = new Rectangle();
+    UUID id = UUID.randomUUID();//为每一辆 坦克生成唯一的ID
+
 
     public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.x = x;
@@ -37,6 +42,31 @@ public class Tank {
         rectangle.y = this.y;
         rectangle.width = WIDTH;
         rectangle.height = HEIGHT;
+    }
+
+    public Tank(TankJoinMsg tankJoinMsg) {
+        this.x = tankJoinMsg.x;
+        this.y = tankJoinMsg.y;
+        this.dir = tankJoinMsg.dir;
+        this.group = tankJoinMsg.group;
+        this.id = tankJoinMsg.id;
+        this.moving = tankJoinMsg.moving;
+
+        //构造子弹自身的rectangle
+        rectangle.x = this.x;
+        rectangle.y = this.y;
+        rectangle.width = WIDTH;
+        rectangle.height = HEIGHT;
+
+    }
+
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public int getSPEED() {
@@ -108,6 +138,13 @@ public class Tank {
         if (!living) {
             tf.tanks.remove(this);
         }
+
+        //画出UUID
+        Color c1 = g.getColor();
+        g.setColor(Color.yellow);
+        g.drawString(id.toString(),x,y);
+        g.setColor(c1);
+
         switch (dir) {
             case LEFT:
                 g.drawImage(RessourceMange.tankL, x, y, null);

@@ -1,7 +1,6 @@
 package com.truekai.TankNet;
 
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -13,7 +12,6 @@ import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.util.ReferenceCountUtil;
 import io.netty.util.concurrent.GlobalEventExecutor;
 
 public class Server {
@@ -31,8 +29,8 @@ public class Server {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
                             ChannelPipeline pl = ch.pipeline();
-                            pl.addLast(new TankMsgDecoder())
-                                    .addLast(new TankMsgEncoder())
+                            pl.addLast(new TankJoinMsgDecoder())
+                                    .addLast(new TankJoinMsgEncoder())
                                     .addLast(new ServerChildHandler());
                         }
                     })
@@ -62,7 +60,6 @@ class ServerChildHandler extends ChannelInboundHandlerAdapter { //SimpleChannleI
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-
         Server.clients.writeAndFlush(msg);
         ServerFrame.INSTANCE.updateClientMsg(msg.toString());
 //        System.out.println("channelRead");
